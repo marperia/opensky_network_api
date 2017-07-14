@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from math import cos, fabs, radians
 import urllib3
+from math import cos, fabs, radians
 from json import loads
 
 DEG_CONST = 111.32138
@@ -26,7 +26,7 @@ def around(y, x, radius=1):
     :param x: latitude. Sets in degrees and decimal (15 degrees and 30 minutes is 15.5).
     :param y: longtitude. The same as x.
     :param radius: Radius around point in km.
-    :return: Set of four coordinates: x1, x2, y1 and y2.
+    :return: Set of four coordinates: x1, x2, y1 and y2 in positive-only system (see below).
     """
     if x > 90 or x < -90 or y > 180 or y < -180:
         raise ValueError('Coordinates are too small or too big!')
@@ -35,8 +35,8 @@ def around(y, x, radius=1):
 
     # translate radius to degrees and return diaposone
     r = radius/DEG_CONST*cos(radians(fabs(x)))
-    # TODO if y + r > 180 or < 0 _or -90_ or x > 90 or < 0
-    return x-r, x+r, y-r, y+r
+    # goes from -180 – 180° and -90 – 90° to 0 – 360° and 0 – 180°
+    return x - r + 90, x + r + 90, y - r + 180, y + r + 180
 
 
 def find(pl_coords, *args):
@@ -47,7 +47,7 @@ def find(pl_coords, *args):
     :return: ID of plane (string)
     """
 
-    if args[0][0] < pl_coords[6] < args[0][1] and args[0][2] < pl_coords[5] < args[0][3]:
+    if args[0][0] < pl_coords[6] + 90 < args[0][1] and args[0][2] < pl_coords[5] + 180 < args[0][3]:
         return pl_coords[0]
 
 
