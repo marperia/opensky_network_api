@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import main
-
-DEG_CONST = 111.32138
 
 """
 @author: Markov Michael

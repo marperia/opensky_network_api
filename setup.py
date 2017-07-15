@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-from os.path import join, dirname
 
 setup(
     name='opensky_network_api',
@@ -12,5 +11,5 @@ setup(
     description='API for opensky-network.org to find planes near special place.',
     download_url='https://github.com/marperia/opensky_network_api/archive/master.zip',
     license='Apache License, Version 2.0, see LICENSE file',
-    install_requires=['urllib3', 'json', 'math'],
+    install_requires=['urllib3'],
 )

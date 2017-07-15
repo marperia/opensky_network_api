@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import urllib3
-from math import cos, fabs, radians
 from json import loads
+from math import cos, fabs, radians
+
+import urllib3
 
 DEG_CONST = 111.32138
 
@@ -10,8 +11,8 @@ def planes(url='https://opensky-network.org/api/states/all', ident='states'):
     """
 
     :param url: URI of opensky-network API.
-    :param ident: JSON identificator for planes
-    :return: Returns plane ID, latitude and longtitude.
+    :param ident: JSON identificator for planes.
+    :return: Returns plane data in JSON from API.
     """
 
     data = loads(
@@ -34,7 +35,7 @@ def around(y, x, radius=1):
         raise ValueError('Radius is too big or too small!')
 
     # translate radius to degrees and return diaposone
-    r = radius/DEG_CONST*cos(radians(fabs(x)))
+    r = radius / DEG_CONST * cos(radians(fabs(x)))
     # goes from -180 – 180° and -90 – 90° to 0 – 360° and 0 – 180°
     return x - r + 90, x + r + 90, y - r + 180, y + r + 180
 
